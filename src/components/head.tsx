@@ -12,7 +12,7 @@ export const HeadComponent = () => {
       />
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      <link rel="icon" href="/metalogo.jpg" />
+      <link rel="icon" href="https://pbs.twimg.com/profile_images/1178955114419240960/QAgCQ-RL_400x400.jpg" />
 
       {/* Open Graph tags */}
       {/* Open Graph is a technology that allows web pages to become more rich and engaging when shared on social media platforms such as Facebook, Twitter, and LinkedIn. By adding Open Graph meta tags to your web page, you can control how your page appears when it's shared on social media, including the title, description, and image that are displayed. */}
