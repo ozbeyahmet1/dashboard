@@ -21,7 +21,7 @@ module.exports = {
       transparent: "transparent",
     },
     boxShadow: {
-      minimal: "rgba(0, 0, 0, 0.16) 0px 1px 4px;",
+      minimal: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
     },
     screens: {
       xs: "450px",
