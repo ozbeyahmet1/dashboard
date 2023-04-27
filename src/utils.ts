@@ -15,3 +15,5 @@ export async function getSingleData<T>(endpoint: string): Promise<T> {
 
 export const getSingleProductData = (endpoint: string) =>
   getSingleData<Product>(INNOLOFT_API_ENDPOINT + "product/" + endpoint);
+
+export type ProductCardProps = Pick<Product, "id" | "picture" | "name">;

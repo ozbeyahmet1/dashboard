@@ -1,7 +1,8 @@
+import { ProductCard } from "@/components/productCard";
 import { Product } from "@/interface/product";
 import { getSingleProductData } from "@/utils";
 import { GetStaticProps } from "next";
-
+import { BsGrid } from "react-icons/bs";
 type Props = {
   readonly product: Product;
 };
@@ -17,11 +18,15 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   };
 };
 
-export default function Home({ product: { name } }: Props) {
+export default function Home({ product: { name, id, picture } }: Props) {
   return (
     <div>
-      <div className="flex w-full">
-        <div>{name}</div>
+      <div className="mb-5 flex items-center gap-x-2">
+        <BsGrid color="white" size={40} className="w-fit rounded-md bg-baseColor p-2" />
+        <p className="text-lg">Homepage</p>
+      </div>
+      <div className="z-40 flex w-full">
+        <ProductCard name={name} id={id} picture={picture} key={id} />
       </div>
     </div>
   );
