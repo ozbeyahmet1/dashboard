@@ -19,6 +19,7 @@ module.exports = {
       baseColor: "#272e71",
       gray: "#979797",
       transparent: "transparent",
+      black: "#000000",
     },
     boxShadow: {
       minimal: "rgba(0, 0, 0, 0.16) 0px 1px 4px",

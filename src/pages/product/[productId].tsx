@@ -5,9 +5,10 @@ import { getSingleProductData, getVideoIdFromUrl } from "@/utils";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { BsPencilSquare } from "react-icons/bs";
 import YouTube from "react-youtube";
-
 const Map = dynamic(import("@/components/map"), { ssr: false });
 
 interface Props {
@@ -40,6 +41,9 @@ const ProductDetails = ({
     video,
   },
 }: Props) => {
+  const router = useRouter();
+  const { productId } = router.query;
+
   const twClasses = {
     headers: "mb-2 font-semibold uppercase text-white",
     tagSm: "w-fit rounded-3xl bg-baseColor bg-opacity-60 px-3 py-1 text-sm text-white",
@@ -62,9 +66,10 @@ const ProductDetails = ({
         <div className="w-3/4">
           <div className="flex  w-full justify-between">
             <h3 className="text-3xl font-medium text-white lg:text-6xl">{name}</h3>
-            <BsPencilSquare size={40} className="cursor-pointer text-white transition-all hover:text-gray" />
+            <Link href={`/edit/${productId as string}`}>
+              <BsPencilSquare size={40} className="cursor-pointer text-white transition-all hover:text-gray" />
+            </Link>
           </div>
-
           <div className="rounded-md ">
             <div className="my-3">
               <p className="w-fit rounded-md border-2 border-white px-2 py-[2px] text-white lg:px-4">{type.name}</p>
