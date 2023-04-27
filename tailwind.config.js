@@ -16,9 +16,12 @@ module.exports = {
     colors: {
       white: "#FFFFFF",
       secondary: "#F2EDF3",
-      base: "#272e71",
-      black: "#343A40",
+      baseColor: "#272e71",
+      gray: "#979797",
       transparent: "transparent",
+    },
+    boxShadow: {
+      minimal: "rgba(0, 0, 0, 0.16) 0px 1px 4px;",
     },
     screens: {
       xs: "450px",
