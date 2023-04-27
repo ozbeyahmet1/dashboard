@@ -17,3 +17,12 @@ export const getSingleProductData = (endpoint: string) =>
   getSingleData<Product>(INNOLOFT_API_ENDPOINT + "product/" + endpoint);
 
 export type ProductCardProps = Pick<Product, "id" | "picture" | "name">;
+
+export const getVideoIdFromUrl = (url: string) => {
+  const regex = /[?&]v=([^&#]*)/;
+  const match = regex.exec(url);
+  if (!match) {
+    return;
+  }
+  return match[1];
+};
