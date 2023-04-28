@@ -3,6 +3,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: { domains: ["img.innoloft.com"] },
+  env: {
+    NEXT_GOOGLE_MAPS_API_KEY: process.env.NEXT_GOOGLE_MAPS_API_KEY,
+    API_KEY: process.env.API_KEY,
+  },
   async headers() {
     return [
       {
