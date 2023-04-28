@@ -15,7 +15,6 @@ export async function getSingleData<T>(endpoint: string): Promise<T> {
 }
 
 
-
 export type ProductCardProps = Pick<Product, "id" | "picture" | "name">;
 
 export async function getData<T>(endpoint: string): Promise<T[]> {

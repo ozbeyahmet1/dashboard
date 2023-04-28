@@ -28,7 +28,7 @@ export default function Home({ product: { name, id, picture } }: Props) {
   return (
     <div className="p-5 lg:p-0">
       <div className="mb-5 flex items-center gap-x-2">
-        <BsGrid color="white" size={40} className={`w-fit rounded-md ${data.mainColor} p-2`} />
+        <BsGrid style={{ background: data.mainColor }} color="white" size={40} className={`w-fit rounded-md p-2`} />
         <p className="text-lg">Homepage</p>
       </div>
       <div className="z-40 flex w-full">
