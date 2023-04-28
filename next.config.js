@@ -5,7 +5,7 @@ const nextConfig = {
   images: { domains: ["img.innoloft.com"] },
   env: {
     NEXT_GOOGLE_MAPS_API_KEY: process.env.NEXT_GOOGLE_MAPS_API_KEY,
-    API_KEY: process.env.API_KEY,
+    APP_ID: process.env.APP_ID,
   },
   async headers() {
     return [
