@@ -1,16 +1,17 @@
 import { Accordion } from "@/components/accordion";
 import Map from "@/components/map";
+import useConfiguration from "@/hooks/useConfiguration";
 // import { Size, TagXl } from '@/components/tags/tagXl';
 import { Identifiable } from "@/interface/identifiable";
 import { Product } from "@/interface/product";
 import { Sex } from "@/interface/user";
-import { editorFormats, editorModules, getSingleProductData, getSingleTrlData, getVideoIdFromUrl } from "@/utils";
+import { editorFormats, editorModules, getSingleProductData, getSingleTrlData, getVideoIdFromUrl, postFormData } from "@/utils";
 import { Field, FieldArray, Form, Formik } from "formik";
 import { GetServerSideProps } from "next";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React, { useState } from "react";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { AiFillCloseCircle, AiOutlineEdit } from "react-icons/ai";
 import { GiFemale, GiMale } from "react-icons/gi";
 import "react-quill/dist/quill.snow.css";
 import YouTube from "react-youtube";
@@ -21,14 +22,6 @@ interface Props {
   readonly product: Product;
   readonly trlData: Identifiable[];
 }
-
-const twClasses = {
-  dashedInput:
-    "right-0 mt-2 h-fit w-full rounded-md border-[1.5px] border-dashed border-gray-400 bg-transparent text-black  p-3 font-medium",
-  headers: "mb-2 font-semibold uppercase text-white",
-  tagSm: "w-fit rounded-3xl bg-baseColor bg-opacity-60 px-3 py-1 text-sm text-white",
-  tagXl: "w-full rounded-md bg-baseColor bg-opacity-60 text-base lg:text-xl uppercase text-white  border-dashed",
-};
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) => {
   const endpoint = params?.productId ? params.productId.toString() : "6781";
@@ -43,20 +36,45 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params }) 
 };
 
 const ProductForm = ({ product, trlData }: Props) => {
-  const [image, setImage] = useState("");
+  const [, setImage] = useState("");
 
+  const { data } = useConfiguration();
+
+  const twClasses = {
+    dashedInput:
+      "right-0 mt-2 h-fit w-full rounded-md border-[1.5px] border-dashed border-gray-400 bg-transparent text-black  p-3 font-medium",
+    headers: "mb-2 font-semibold uppercase text-white",
+    tagSm: `w-fit rounded-3xl  bg-opacity-60 px-3 py-1 text-sm text-white`,
+    tagXl: `w-full rounded-md  bg-opacity-60 text-base lg:text-xl uppercase text-white  border-dashed`,
+  };
+
+  if (!data) {
+    return <div></div>;
+  }
   return (
     <Formik
       initialValues={product}
-      onSubmit={(values, actions) => {
-        console.log(values);
+      onSubmit={async (values, _) => {
+        await postFormData(values);
       }}
     >
       {({ values: { businessModels, categories, company, description, picture, video, user }, setFieldValue }) => (
         <Form>
           <div className="w-full rounded-2xl">
+            <div className="mb-5 flex items-center gap-x-2">
+              <AiOutlineEdit
+                color="white"
+                size={40}
+                className={`w-fit rounded-md  p-2`}
+                style={{ background: data?.mainColor }}
+              />
+              <p className="text-lg">Edit</p>
+            </div>
             {/* Top */}
-            <section className="flex w-full items-start gap-2 bg-baseColor p-3 lg:gap-8 lg:rounded-tl-2xl lg:rounded-tr-2xl lg:p-8">
+            <section
+              className={`flex w-full items-start gap-2  p-3 lg:gap-8 lg:rounded-tl-2xl lg:rounded-tr-2xl lg:p-8`}
+              style={{ background: data?.mainColor }}
+            >
               <div className="flex w-fit flex-col items-center rounded-md">
                 <Image
                   src={picture}
@@ -220,7 +238,7 @@ const ProductForm = ({ product, trlData }: Props) => {
                   </Field>
                 </div>
               </section>
-              <section className="w-full border-b-[2px] border-dashed border-gray py-8">
+              <section className={`w-full border-b-[2px] border-dashed border-gray py-8`}>
                 <h3 className="mb-2 font-semibold uppercase text-black">video</h3>
                 <YouTube
                   videoId={getVideoIdFromUrl(video)}
@@ -229,6 +247,7 @@ const ProductForm = ({ product, trlData }: Props) => {
                 />
                 <Field type="text" id="video" name="video" className={twClasses.dashedInput} />
               </section>
+
               <section className="w-full py-8">
                 <h3 className="mb-2 font-semibold uppercase text-black">OFFERED BY </h3>
                 <div className="flex flex-col items-start gap-3 md:flex-row">
@@ -389,6 +408,7 @@ const ProductForm = ({ product, trlData }: Props) => {
                   </div>
                 </div>
               </section>
+
             </div>
             <button
               type="submit"

@@ -14,12 +14,11 @@ export async function getSingleData<T>(endpoint: string): Promise<T> {
   }
 }
 
-export const getSingleProductData = (endpoint: string) =>
-  getSingleData<Product>(INNOLOFT_API_ENDPOINT + "product/" + endpoint);
+
 
 export type ProductCardProps = Pick<Product, "id" | "picture" | "name">;
 
-export async function getDatas<T>(endpoint: string): Promise<T[]> {
+export async function getData<T>(endpoint: string): Promise<T[]> {
   try {
     const response = await axios.get<T[]>(endpoint);
     return response.data;
@@ -29,8 +28,24 @@ export async function getDatas<T>(endpoint: string): Promise<T[]> {
   }
 }
 
+export async function postData<T>(endpoint: string, data: Product): Promise<T> {
+  try {
+    const response = await axios.put<T>(endpoint, data, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type',
+      },
+    });
+    return response.data;
+  } catch (error: AxiosError | unknown) {
+    console.error((error as AxiosError).message);
+    return null as unknown as T;
+  }
+}
+
 export async function fetchTRLData(): Promise<Identifiable[]> {
-  const endpoint = "https://api-test.innoloft.com/trl/";
+  const endpoint = `${INNOLOFT_API_ENDPOINT}trl/`;
 
   try {
     const response = await axios.get<Identifiable[]>(endpoint);
@@ -41,7 +56,11 @@ export async function fetchTRLData(): Promise<Identifiable[]> {
   }
 }
 
-export const getSingleTrlData = () => getDatas<Identifiable>("https://api-test.innoloft.com/trl/");
+export const getSingleTrlData = () => getData<Identifiable>(`${INNOLOFT_API_ENDPOINT}trl/`);
+export const getSingleProductData = (endpoint: string) =>
+  getSingleData<Product>(INNOLOFT_API_ENDPOINT + "product/" + endpoint);
+
+export const postFormData = (formData: Product) => postData<Product>(`${INNOLOFT_API_ENDPOINT}product/6781/`, formData);
 
 export const getVideoIdFromUrl = (url: string) => {
   const regex = /[?&]v=([^&#]*)/;
@@ -73,3 +92,7 @@ export const editorFormats = [
   "link",
   "image",
 ];
+
+export type PropsWithBgColor<P = unknown> = P & {
+  readonly bgColor: string;
+};
